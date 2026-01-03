@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Simple Quiz</title>
+<style>
+body{font-family:Arial;background:#fff8e6;}
+.container{
+width:350px;
+margin:50px auto;
+background:white;
+padding:15px;
+border-radius:5px;
+}
+h2{text-align:center;}
+button{
+width:100%;
+padding:5px;
+background:#4CAF50;
+color:white;
+border:none;
+cursor:pointer;
+margin-top:5px;
+}
+ul{padding:0;}
+li{
+list-style:none;
+padding:5px;
+border:1px solid #ccc;
+margin-bottom:5px;
+cursor:pointer;
+}
+li:hover{background:#f2f2f2;}
+</style>
+</head>
+<body>
+<div class="container">
+<h2>Simple Quiz</h2>
+<div id="quiz"></div>
+<button onclick="nextQuestion()">Next</button>
+<p id="score"></p>
+</div>
+
+<script>
+var questions=[
+{q:"What is 2+2?", a:["3","4","5","6"], correct:1},
+{q:"Capital of South Africa?", a:["Pretoria","Durban","Cape Town","Johannesburg"], correct:0},
+{q:"Which language is used for web?", a:["Python","HTML","C++","Java"], correct:1}
+];
+
+var current=0;
+var score=0;
+
+function showQuestion(){
+var quiz=document.getElementById("quiz");
+quiz.innerHTML="";
+var q=document.createElement("p");
+q.innerText=questions[current].q;
+quiz.appendChild(q);
+
+for(var i=0;i<questions[current].a.length;i++){
+var li=document.createElement("li");
+li.innerText=questions[current].a[i];
+li.onclick=function(){
+if(this.innerText==questions[current].a[questions[current].correct]){
+score++;
+}
+for(var j=0;j<quiz.children.length;j++){quiz.children[j].style.pointerEvents="none";}
+}
+quiz.appendChild(li);
+}
+}
+
+function nextQuestion(){
+current++;
+if(current>=questions.length){
+document.getElementById("quiz").innerHTML="<h3>Quiz finished!</h3>";
+document.getElementById("score").innerText="Your score: "+score+"/"+questions.length;
+}else{
+showQuestion();
+}
+}
+
+showQuestion();
+</script>
+
+</body>
+</html>
